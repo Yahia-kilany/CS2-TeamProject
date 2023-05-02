@@ -6,6 +6,7 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 #ifndef _DOCUMENT_H
 #define _DOCUMENT_H
 #include <string>
+using namespace std;
 class Document {
 public:
 

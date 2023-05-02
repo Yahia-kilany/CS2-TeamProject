@@ -1,8 +1,6 @@
 /**
  * CS2 project: 2- Simple palagarism detection utility using string matching
  */
-
-
 #ifndef _BOOYERMOOREMATCHER_H
 #define _BOOYERMOOREMATCHER_H
 

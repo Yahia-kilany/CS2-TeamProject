@@ -1,27 +1,14 @@
 /**
- * Project Untitled
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
-
-
 #include "Document.h"
 
 /**
  * Document implementation
  */
-
-
-/**
- * @param str
- * @return void
- */
 void Document::setTitle(string str) {
     return;
 }
-
-/**
- * @param str
- * @return void
- */
 void Document::setContent(string str) {
     return;
 }
@@ -37,13 +24,13 @@ void Document::createFromFile(string filename) {
 /**
  * @return string const
  */
-string const Document::getTitle() {
-    return null;
+string Document::getTitle() const{
+    return title;
 }
 
 /**
  * @return string const
  */
-string const Document::getContent() {
-    return null;
+string Document::getContent() const{
+    return content;
 }

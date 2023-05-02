@@ -1,18 +1,12 @@
 /**
- * Project Untitled
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
-
-
 #include "Matcher.h"
 
 /**
  * Matcher implementation
  */
 
-
-/**
- * @return size_t
- */
 virtual size_t Matcher::getMemoryUsage() {
     return null;
 }
@@ -26,15 +20,11 @@ virtual vector<string> Matcher::match(const Document& testDoc, const Corpus& cor
     return null;
 }
 
-/**
- * @param doc
- * @return vector<string>
- */
 vector<string> Matcher::splitIntoSentences(const Document& doc) {
 
         vector<string> sentences;
         string sentence;
-        for (char c : document.content) {
+        for (char c : doc.getContent()) {
             if (c == '.' || c == '?' || c == '!') {
                 if (!sentence.empty()) {
                     sentences.push_back(sentence);
@@ -56,4 +46,3 @@ vector<string> Matcher::splitIntoSentences(const Document& doc) {
         }
         return sentences;
     }
-};}
