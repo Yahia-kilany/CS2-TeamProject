@@ -15,10 +15,3 @@ void Corpus::addDocument(Document Doc) {
 vector<Document> Corpus::getDocuments() const{
     return Documents;
 }
-
-Document Corpus::getDocument(int index) const{
-    if(index>Documents.size()){
-        exit(1);
-    }
-    return Documents[index];
-}
