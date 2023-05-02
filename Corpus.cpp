@@ -17,8 +17,11 @@ vector<Document> Corpus::getDocuments() const{
 }
 
 Document Corpus::getDocument(int index) const{
+<<<<<<< HEAD
     if(index>Documents.size()){
         exit(1);
     }
+=======
+>>>>>>> d676a60ba5d1f011f02e0f6e95f4c4d72625a1f2
     return Documents[index];
 }
