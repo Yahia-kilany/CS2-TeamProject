@@ -1,40 +1,28 @@
 /**
- * Project Untitled
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
-
-
 #include "BooyerMooreMatcher.h"
-
-/**
- * BooyerMooreMatcher implementation
- */
-
-
-/**
- * @param testDoc
- * @param corpus
- * @return vector<string>
- */
 vector<string> BooyerMooreMatcher::match(const Document& testDoc, const Corpus& corpus) {
   vector<string> matches;
-        vector<string> sentences = splitIntoSentences(doc);
+        vector<string> sentences = splitIntoSentences(testDoc);
         for (const auto& s : sentences) {
-            vector<int> badCharacter = preprocessBadCharacter(s);
-            vector<int> goodSuffix = preprocessGoodSuffix(s);
-            for (const auto& d : corpus.documents) {
+            vector<int> badCharacter = processBadCharacters(s);
+            vector<int> goodSuffix = processGoodSuffix(s);
+            for (const auto& d : corpus.getDocuments()) {
                 int i = s.size() - 1;
                 int j = s.size() - 1;
-                while (j >= 0 && i < d.content.size()) {
-                    if (s[j] == d.content[i]) {
+                while (j >= 0 && i < d.getContent().size()) {
+                    if (s[j] == d.getContent().at(i)) {
                         i--;
                         j--;
-                    } else {
-                        i += s.size() - 1 - min(j, 1 + badCharacter[d.content[i]]);
+                    }
+                     else {
+                        i += s.size() - 1 - min(j, 1 + badCharacter[d.getContent().at(i)]);
                         j = goodSuffix[j];
                     }
                 }
                 if (j < 0) {
-                    matches.emplace_back(d.title);
+                    matches.emplace_back(d.getTitle());
                     break; // add break statement to avoid duplicate matches
                 }
             }
@@ -42,13 +30,13 @@ vector<string> BooyerMooreMatcher::match(const Document& testDoc, const Corpus& 
         return matches;
     }
 
-}
+
 
 /**
  * @return size_t
  */
 size_t BooyerMooreMatcher::getMemoryUsage() {
-    return null;
+    return sizeof(*this);
 }
 
 /**
@@ -61,7 +49,7 @@ vector<int> BooyerMooreMatcher::processBadCharacters(const string& pattern) {
             badCharacter[pattern[i]] = i;
         }
         return badCharacter;
-    }}
+    }
 
 /**
  * @param pattern

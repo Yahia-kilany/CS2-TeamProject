@@ -1,7 +1,6 @@
 /**
- * Project Untitled
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
-
 
 #include "Corpus.h"
 
@@ -10,25 +9,13 @@
  */
 
 
-/**
- * @param Doc
- * @return void
- */
 void Corpus::addDocument(Document Doc) {
     return;
 }
-
-/**
- * @return vector<string> const
- */
-vector<string> const Corpus::getDocuments() {
-    return null;
+vector<Document> Corpus::getDocuments() const{
+    return Documents;
 }
 
-/**
- * @param index
- * @return Document const
- */
-Document const Corpus::getDocument(int index) {
-    return null;
+Document Corpus::getDocument(int index) const{
+    return Documents[index];
 }
