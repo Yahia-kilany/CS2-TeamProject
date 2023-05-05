@@ -1,36 +1,37 @@
 /**
 CS2 project: 2- Simple palagarism detection utility using string matching
  */
+
 #include "Document.h"
+#include <fstream>
+#include <stdexcept>
 
-/**
- * Document implementation
- */
-void Document::setTitle(string str) {
-    return;
-}
-void Document::setContent(string str) {
-    return;
+void Document::setTitle(std::string str) {
+    title = str;
 }
 
-/**
- * @param filename
- * @return void
- */
-void Document::createFromFile(string filename) {
-    return;
+void Document::setContent(std::string str) {
+    content = str;
 }
 
-/**
- * @return string const
- */
-string Document::getTitle() const{
+void Document::createFromFile(std::string filename) {
+    std::ifstream file(filename);
+    if (file.is_open()) {
+        std::string line;
+        while (getline(file, line)) {
+            content += line + "\n";
+        }
+        file.close();
+    }
+    else {
+        throw std::runtime_error("Failed to open file " + filename);
+    }
+}
+
+std::string Document::getTitle() const {
     return title;
 }
 
-/**
- * @return string const
- */
-string Document::getContent() const{
+std::string Document::getContent() const {
     return content;
 }
