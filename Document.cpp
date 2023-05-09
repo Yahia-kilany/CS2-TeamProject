@@ -28,10 +28,10 @@ void Document::createFromFile(std::string filename) {
         }
         file.close(); // close the file stream
     }
-    else {
+    /*else {
         // if the file could not be opened, throw a runtime error
         throw std::runtime_error("Failed to open file " + filename);
-    }
+    }*/
 }
 // return the title of the document
 std::string Document::getTitle() const {
