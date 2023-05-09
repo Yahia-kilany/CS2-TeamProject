@@ -14,13 +14,9 @@ public:
     BruteForceMatcher ();
     BruteForceMatcher (int);
     std::vector<std::string> match (const Document& testDoc , const Corpus& corpus);
-
-    int getThreshold () const;
-
     size_t getMemoryUsage ();
 private:
-    int threshold;
-    int hammingDistance (const std::string& pattern , const std::string& text);
+    bool hammingDistance (const std::string& pattern , const std::string& text, int threshold);
 };
 
 #endif //_BRUTEFORCEMATCHER_H
