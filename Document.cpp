@@ -15,6 +15,7 @@ void Document::setContent(std::string str) {
 }
 
 void Document::createFromFile(std::string filename) {
+    title=filename;
     std::ifstream file(filename);
     if (file.is_open()) {
         std::string line;
