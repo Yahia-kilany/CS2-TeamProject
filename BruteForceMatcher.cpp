@@ -43,13 +43,16 @@ bool BruteForceMatcher::hammingDistance(const string& pattern, const string& tex
    int dist = 0;
    
         for (int i = 0; i < text.size()-pattern.size(); i++) {
-            string txtsub=text.substr(i,pattern.size()+i);
-            if (pattern[i] != text[i]) {
-                dist++;
-            }
-            if(dist<=threshold)
+            string txtsub=text.substr(i,pattern.size());
+            for(int j=0; j<pattern.size();j++)
             {
-                return true;
+                if (pattern[j] != text[j]) {
+                    dist++;
+                }
+                if(dist<=threshold)
+                {
+                    return true;
+                }
             }
         }
         return false;
