@@ -9,6 +9,28 @@
 #include <BooyerMooreMatcher.h>
 using namespace std;
 int main () {
+    
+       Corpus corpus;
+    Document doc;
+    doc.createFromFile("First essay");
+    corpus.addDocument(doc);
+    
+    doc.createFromFile("Second essay");
+    corpus.addDocument(doc);
+    
+    doc.createFromFile("Third essay");
+    corpus.addDocument(doc);
+    
+    doc.createFromFile("Fourth essay");
+    corpus.addDocument(doc);
+    
+    Document testdoc;
+    
+    testdoc.createFromFile("Testdocpl");
+    
+
+
+    
 
     BruteForceMatcher bruteForceMatcher;
     RabinKarpMatcher rabinKarpMatcher;
