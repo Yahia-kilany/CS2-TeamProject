@@ -11,8 +11,6 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 
 class BruteForceMatcher: public Matcher {
 public:
-    BruteForceMatcher ();
-    BruteForceMatcher (int);
     std::vector<std::string> match (const Document& testDoc , const Corpus& corpus);
     size_t getMemoryUsage ();
 private:

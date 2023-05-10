@@ -7,7 +7,7 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 #include "Document.h"
 #include <fstream>
 #include <stdexcept>
-
+#include "iostream"
 // set the title of the document to the given string
 void Document::setTitle(std::string str) {
     title = str;
@@ -28,10 +28,11 @@ void Document::createFromFile(std::string filename) {
         }
         file.close(); // close the file stream
     }
-    /*else {
+    else {
         // if the file could not be opened, throw a runtime error
-        throw std::runtime_error("Failed to open file " + filename);
-    }*/
+        cout<<"Failed to open file " + filename;
+        exit(1);
+    }
 }
 // return the title of the document
 std::string Document::getTitle() const {
