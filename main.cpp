@@ -62,7 +62,7 @@ int main () {
     {
         std::cout << *itr << std::endl;
     }
-    Compare the time it takes to run each algorithm
+    // Compare the time it takes to run each algorithm
     auto start = chrono::high_resolution_clock::now ();
     bruteForceMatcher.match (testdoc , corpus);
     auto end = chrono::high_resolution_clock::now ();
