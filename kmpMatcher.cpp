@@ -18,11 +18,11 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 vector<string> kmpMatcher::match(const Document& testDoc, const Corpus& corpus) {
 vector<string> matches;
         vector<string> sentences = splitIntoSentences(testDoc);
-        for (const auto& s : sentences) {
+        for (const string& s : sentences) {
             vector<int> lps(s.size(), 0);
             int i = 0;
             int j = 0;
-            for (const auto& d : corpus.getDocuments()) {
+            for (const Document& d : corpus.getDocuments()) {
                 int n = d.getContent().size();
                 while (i < s.size() && j < n) {
                     if (s[i] == d.getContent().at(j)) {
@@ -30,8 +30,8 @@ vector<string> matches;
                         j++;
                     }
                     if (i == s.size()) {
-                        matches.emplace_back(d.getTitle());
-                        break; // add break statement to avoid duplicate matches
+                        if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
+                        matches.emplace_back (d.getTitle()); // add break statement to avoid duplicate matches
                     }
                     else if (j < n && s[i] != d.getContent().at(j)) {
                         if (i != 0) {

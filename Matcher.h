@@ -5,6 +5,7 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 
 #ifndef _MATCHER_H
 #define _MATCHER_H
+#include <algorithm>
 #include "Document.h"
 #include "Corpus.h"
 using namespace std;

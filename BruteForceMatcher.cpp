@@ -2,7 +2,7 @@
 CS2 project: 2- Simple palagarism detection utility using string matching
  */
 #include "BruteForceMatcher.h"
-
+#include <algorithm>
 /**
  * BruteForceMatcher implementation
  */
@@ -11,11 +11,12 @@ vector<string> BruteForceMatcher::match(const Document& testDoc, const Corpus& c
 vector<string> matches;
 int threshold = 0;
         vector<string> sentences = splitIntoSentences (testDoc);
-        for (const auto& s : sentences)
+        for (const string& s : sentences)
         {
-            for (const auto& d : corpus.getDocuments()) {
+            for (const Document& d : corpus.getDocuments()) {
                     if(hammingDistance(s,d.getContent(),threshold)){
-                    matches.emplace_back (d.getTitle());
+                        if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
+                        matches.emplace_back (d.getTitle());
                     break;
                     }
                 

@@ -8,16 +8,16 @@ vector<string> RabinKarpMatcher::match(const Document& testDoc, const Corpus& co
      vector<string> matches;
         vector<string> sentences = splitIntoSentences(testDoc);
         int prime = 1000000007; // choose a large prime number for the modulus operation
-        for (const auto& s : sentences) {
+        for (const string& s : sentences) {
             int sHash = calculateHash(s, 0, s.size() - 1, prime);
-            for (const auto& d : corpus.getDocuments()) {
+            for (const Document& d : corpus.getDocuments()) {
                 int dHash = calculateHash(d.getContent(), 0, s.size() - 1, prime);
                 int base = 31; // choose a base for the hash function
                 int powBase = 1; // store powers of base modulo prime
                 for (int i = 0; i <= d.getContent().size() - s.size(); i++) {
                     if (dHash == sHash && isEqual(s, 0, s.size() - 1, d.getContent(), i, i + s.size() - 1)) {
-                        matches.emplace_back(d.getTitle());
-                        break;
+                        if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
+                        matches.emplace_back (d.getTitle());
                     }
                     if (i < d.getContent().size() - s.size()) {
                         dHash = ((dHash - s[i] * powBase % prime) * base % prime + d.getContent()[i + s.size()]) % prime; // add modulus operation

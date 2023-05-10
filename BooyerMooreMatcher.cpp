@@ -5,10 +5,10 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 vector<string> BooyerMooreMatcher::match(const Document& testDoc, const Corpus& corpus) {
   vector<string> matches;
         vector<string> sentences = splitIntoSentences(testDoc);
-        for (const auto& s : sentences) {
+        for (const string& s : sentences) {
             vector<int> badCharacter = processBadCharacters(s);
             vector<int> goodSuffix = processGoodSuffix(s);
-            for (const auto& d : corpus.getDocuments()) {
+            for (const Document& d : corpus.getDocuments()) {
                 int i = s.size() - 1;
                 int j = s.size() - 1;
                 while (j >= 0 && i < d.getContent().size()) {
@@ -22,7 +22,9 @@ vector<string> BooyerMooreMatcher::match(const Document& testDoc, const Corpus& 
                     }
                 }
                 if (j < 0) {
-                    matches.emplace_back(d.getTitle());
+
+                    if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
+                    matches.emplace_back (d.getTitle());
                     break; // add break statement to avoid duplicate matches
                 }
             }
