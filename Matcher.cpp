@@ -12,9 +12,12 @@ vector<string> Matcher::splitIntoSentences(const Document& doc) {
 
         vector<string> sentences;
         string sentence;
-        for (char c : doc.getContent()) {
+        char c;
+        for (int i=0;i<doc.getContent().size();i++) {
+            c=doc.getContent().at(i);
             if (c == '.' || c == '?' || c == '!') {
                 if (!sentence.empty()) {
+                    i++;
                     sentences.push_back(sentence);
                     sentence.clear();
                 }

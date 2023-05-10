@@ -35,26 +35,21 @@ size_t BruteForceMatcher::getMemoryUsage() {
     return sizeof(*this);
 }
 
-/**
- * @param pattern
- * @param text
- * @return int
- */
 bool BruteForceMatcher::hammingDistance(const string& pattern, const string& text, int threshold) {
-   int dist = 0;
    
         for (int i = 0; i < text.size()-pattern.size(); i++) {
+               int dist = 0;
             string txtsub=text.substr(i,pattern.size());
             for(int j=0; j<pattern.size();j++)
             {
-                if (pattern[j] != text[j]) {
+                if (pattern[j] != txtsub[j]) {
                     dist++;
                 }
+            }
                 if(dist<=threshold)
                 {
                     return true;
                 }
-            }
         }
         return false;
     }
