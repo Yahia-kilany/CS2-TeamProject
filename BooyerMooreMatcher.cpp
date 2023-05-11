@@ -1,84 +1,77 @@
-/**
+/*
 CS2 project: 2- Simple palagarism detection utility using string matching
- */
+*/
 #include "BooyerMooreMatcher.h"
+#include <iostream>
 vector<string> BooyerMooreMatcher::match(const Document& testDoc, const Corpus& corpus) {
-  vector<string> matches;
-        vector<string> sentences = splitIntoSentences(testDoc);
-        for (const string& s : sentences) {
-            vector<int> badCharacter = processBadCharacters(s);
-            vector<int> goodSuffix = processGoodSuffix(s);
-            for (const Document& d : corpus.getDocuments()) {
-                int i = s.size() - 1;
+    vector<string> matches;
+    vector<string> sentences = splitIntoSentences(testDoc);
+    for (const string& s : sentences) {
+        vector<int> badChar=processBadCharacters(s);
+        vector<int> goodsuffix = processGoodSuffix(s);
+        for (const Document& d : corpus.getDocuments()) {
+            cout<<1<<" "<<d.getTitle();
+            int i = s.size()-1;
+            while (i < d.getContent().size()) {
                 int j = s.size() - 1;
-                while (j >= 0 && i < d.getContent().size()) {
-                    if (s[j] == d.getContent().at(i)) {
-                        i--;
-                        j--;
-                    }
-                     else {
-                        i += s.size() - 1 - min(j, 1 + badCharacter[d.getContent().at(i)]);
-                        j = goodSuffix[j];
-                    }
+                while (j >= 0 && s[j] == d.getContent().at(i)) {
+                cout<<s[j]<<" "<<d.getContent().at(i)<<endl;
+                    i--;
+                    j--;
                 }
                 if (j < 0) {
-
-                    if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
-                    matches.emplace_back (d.getTitle());
-                    break; // add break statement to avoid duplicate matches
+                    if (std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end()) {
+                        matches.emplace_back(d.getTitle());
+                    }
+                } else {
+                    int badcharShift = j - badChar[static_cast<int>(d.getContent().at(i)) * s.size() + j];
+                    int goodSuffShift = goodsuffix[j + 1];
+                    if (j < s.size() - 1) {
+                        goodSuffShift = goodsuffix[j + 1];
+                    }
+                    i += max(badcharShift, goodSuffShift);
                 }
             }
         }
-        return matches;
     }
+    return matches;
+}
 
-
-
-/**
- * @return size_t
- */
 size_t BooyerMooreMatcher::getMemoryUsage() {
     return sizeof(*this);
 }
 
-/**
- * @param pattern
- * @return vector<int>
- */
 vector<int> BooyerMooreMatcher::processBadCharacters(const string& pattern) {
-  vector<int> badCharacter(256, -1);
-        for (int i = 0; i < pattern.size(); i++) {
-            badCharacter[pattern[i]] = i;
-        }
-        return badCharacter;
+    vector<int> badChar(256 * pattern.size(), -1);
+    for (int i = 0; i < pattern.size(); i++) {
+        badChar[static_cast<int>(pattern[i]) * pattern.size() + i] = i;
     }
+    for (int i = 0; i < 256; i++) {
+        
+        for (int j = pattern.size() - 2; j >= 0; j--) {
+            if (badChar[i * pattern.size() + j] == -1) {
+                badChar[i * pattern.size() + j] = badChar[i * pattern.size() + j + 1];
+            }
+        }
+    }
+    return badChar;
+}
 
-/**
- * @param pattern
- * @return vector<int>
- */
+
 vector<int> BooyerMooreMatcher::processGoodSuffix(const string& pattern) {
-    int m = pattern.size();
-        vector<int> goodSuffix(m, m);
-
-        int i = m - 1, j = m;
-        while (i >= 0) {
-            while (j < m && pattern[i] != pattern[j]) {
-                j = goodSuffix[j];
-            }
-            i--; j--;
-            goodSuffix[i] = j;  
+    vector<int> goodsuffix(pattern.size(), 0);
+    int lastPrefixPosition = pattern.size();
+    for (int i = pattern.size() - 1; i >= 0; i--) {
+        if (pattern.substr(i + 1) == pattern.substr(0, pattern.length() - i - 1)) {
+            lastPrefixPosition = i + 1;
         }
-
-        j = goodSuffix[0];
-        for (i = 0; i < m; i++) {
-            if (goodSuffix[i] == m) {
-                goodSuffix[i] = j;
-            }
-            if (i == j) {
-                j = goodSuffix[j];
-            }
-        }
-
-        return goodSuffix;
+        goodsuffix[i] = lastPrefixPosition - i + pattern.size() - 1;
     }
+    for (int i = 0; i < pattern.size() - 1; i++) {
+        int slen = goodsuffix[i + 1];
+        if (i + slen < pattern.size() && pattern[i + slen] != pattern[i]) {
+            goodsuffix[i + 1] = slen - 1;
+        }
+    }
+    return goodsuffix;
+}
