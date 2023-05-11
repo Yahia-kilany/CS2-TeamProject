@@ -24,6 +24,7 @@ vector<string> Matcher::splitIntoSentences(const Document& doc) {
             }
             else if (c == '\n') {
                 if (!sentence.empty()) {
+                    i++;
                     sentences.push_back(sentence);
                     sentence.clear();
                 }

@@ -3,7 +3,7 @@ CS2 project: 2- Simple palagarism detection utility using QString matching
  */
 #include "BooyerMooreMatcherQT.h"
 QVector<QString> BooyerMooreMatcher::match(const Document& testDoc, const Corpus& corpus) {
-  QVector<QString> matches;
+QVector<QString> matches;
         QVector<QString> sentences = splitIntoSentences(testDoc);
         for (const auto& s : sentences) {
             QVector<int> badCharacter = processBadCharacters(s);
@@ -16,7 +16,7 @@ QVector<QString> BooyerMooreMatcher::match(const Document& testDoc, const Corpus
                         i--;
                         j--;
                     }
-                     else {
+                    else {
                         i += s.size() - 1 - min(j, 1 + badCharacter.at(static_cast<int>(d.getContent().at(i).toLatin1())));
                         j = goodSuffix[j];
                     }

@@ -4,53 +4,40 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 
 
 #include "kmpMatcher.h"
+#include <iostream>
 
-/**
- * kmpMatcher implementation
+ /**
+     * kmpMatcher implementation
  */
 
 
-/**
- * @param testDoc
- * @param corpus
- * @return vector<string>
- */
-vector<string> kmpMatcher::match(const Document& testDoc, const Corpus& corpus) {
-vector<string> matches;
-        vector<string> sentences = splitIntoSentences(testDoc);
-        for (const string& s : sentences) {
-            vector<int> lps(s.size(), 0);
-            int i = 0;
-            int j = 0;
-            for (const Document& d : corpus.getDocuments()) {
-                int n = d.getContent().size();
-                while (i < s.size() && j < n) {
-                    if (s[i] == d.getContent().at(j)) {
-                        i++;
-                        j++;
-                    }
-                    if (i == s.size()) {
-                        if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
-                        matches.emplace_back (d.getTitle()); // add break statement to avoid duplicate matches
-                    }
-                    else if (j < n && s[i] != d.getContent().at(j)) {
-                        if (i != 0) {
-                            i = lps[i - 1];
+ /**
+  * @param testDoc
+  * @param corpus
+  * @return vector<string>
+  */
+vector<string> kmpMatcher::match (const Document& testDoc , const Corpus& corpus) {
+    vector<string> matches;
+    vector<string> sentences = splitIntoSentences (testDoc);
+    for (const string& s : sentences) {
+        for (const Document& d : corpus.getDocuments ()) {
+            if(KMPSearch(s,d.getContent()))
+            {
+                if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
+                        {
+                        matches.emplace_back (d.getTitle());
                         }
-                        else {
-                            j++;
-                        }
-                    }
-                }
             }
-        }
-        return matches;}
+            }
+    }
+    return matches;
+}
 
 /**
  * @return size_t
  */
-size_t kmpMatcher::getMemoryUsage() {
-    return sizeof(*this);
+size_t kmpMatcher::getMemoryUsage () {
+    return sizeof (*this);
 }
 
 /**
@@ -58,25 +45,38 @@ size_t kmpMatcher::getMemoryUsage() {
  * @param lps
  * @return void
  */
-void kmpMatcher::computeLPS(const string& pattern, vector<int>& lps) {
-     int m = pattern.size();
-        int len = 0;
-        lps[0] = 0;
-        int i = 1;
-        while (i < m) {
-            if (pattern[i] == pattern[len]) {
-                len++;
-                lps[i] = len;
-                i++;
+vector<int> kmpMatcher::computeLPS (const string& pattern) {
+    int M = pattern.size();
+    // length of the previous longest prefix suffix
+    int len = 0;
+
+    vector<int> lps(M); // lps[0] is always 0
+
+    // the loop calculates lps[i] for i = 1 to M-1
+    int i = 1;
+    while (i < M) {
+        if (pattern[i] == pattern[len]) {
+            len++;
+            lps[i] = len;
+            i++;
+        }
+        else // (pat[i] != pat[len])
+        {
+            // This is tricky. Consider the example.
+            // AAACAAAA and i = 7. The idea is similar
+            // to search step.
+            if (len != 0) {
+                len = lps[len - 1];
+
+                // Also, note that we do not increment
+                // i here
             }
-            else {
-                if (len != 0) {
-                    len = lps[len - 1];
-                }
-                else {
-                    lps[i] = 0;
-                    i++;
-                }
+            else // if (len == 0)
+            {
+                lps[i] = 0;
+                i++;
             }
         }
     }
+    return lps;
+}

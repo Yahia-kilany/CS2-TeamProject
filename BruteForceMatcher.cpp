@@ -16,8 +16,10 @@ int threshold = 0;
             for (const Document& d : corpus.getDocuments()) {
                     if(hammingDistance(s,d.getContent(),threshold)){
                         if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
+                        {
                         matches.emplace_back (d.getTitle());
-                    break;
+                        break;
+                        }
                     }
                 
             }
