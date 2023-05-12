@@ -11,7 +11,7 @@ CONFIG += c++17
 SOURCES += \
     BooyerMooreMatcherQT.cpp \
     BruteForceMatcherQT.cpp \
-    Corpus.cpp \
+    CorpusQT.cpp \
     DocumentQT.cpp \
     MatcherQT.cpp \
     RabinKarpMatcherQT.cpp \
@@ -23,10 +23,10 @@ SOURCES += \
 HEADERS += \
     BooyerMooreMatcherQT.h \
     BruteForceMatcherQT.h \
+    CorpusQT.h \
     DocumentQT.h \
     MatcherQT.h \
     RabinKarpMatcherQT.h \
-    corpusQT.h \
     kmpMatcherQT.h \
     mainwindow.h \
     viewcorpus.h

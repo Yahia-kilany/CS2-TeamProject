@@ -1,46 +1,51 @@
 /**
-CS2 project: 2- Simple palagarism detection utility using QString matching
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
 
 
 #include "kmpMatcherQT.h"
+#include <iostream>
 
-QVector<QString> kmpMatcher::match(const Document& testDoc, const Corpus& corpus) {
-QVector<QString> matches;
-        QVector<QString> sentences = splitIntoSentences(testDoc);
-        for (const auto& s : sentences) {
-            QVector<int> lps(s.size(), 0);
-            int i = 0;
-            int j = 0;
-            for (const auto& d : corpus.getDocuments()) {
-                int n = d.getContent().size();
-                while (i < s.size() && j < n) {
-                    if (s[i] == d.getContent().at(j)) {
-                        i++;
-                        j++;
-                    }
-                    if (i == s.size()) {
-                        matches.emplace_back(d.getTitle());
-                        break; // add break statement to avoid duplicate matches
-                    }
-                    else if (j < n && s[i] != d.getContent().at(j)) {
-                        if (i != 0) {
-                            i = lps[i - 1];
-                        }
-                        else {
-                            j++;
-                        }
-                    }
+ /**
+     * kmpMatcher implementation
+ */
+
+
+ /**
+  * @param testDoc
+  * @param corpus
+  * @return vector<string>
+  */
+map<string , double> kmpMatcher::match (const Document& testDoc , const Corpus& corpus) {
+    map <string , double> matches;
+    vector<string> sentences = splitIntoSentences (testDoc);
+    for (const string& s : sentences) {
+        for (const Document& d : corpus.getDocuments ()) {
+
+            if (KMPSearch (s , d.getContent()))
+            {
+                if (matches.find (d.getTitle ()) == matches.end ())
+                {
+                    matches.insert (pair<string , double> (d.getTitle () , s.size ()));
+                }
+                else {
+                    matches[d.getTitle ()] += s.size ();
                 }
             }
         }
-        return matches;}
+        for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
+        {
+            itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
+        }
+    }
+    return matches;
+}
 
 /**
  * @return size_t
  */
-size_t kmpMatcher::getMemoryUsage() {
-    return sizeof(*this);
+size_t kmpMatcher::getMemoryUsage () {
+    return sizeof (*this);
 }
 
 /**
@@ -48,25 +53,38 @@ size_t kmpMatcher::getMemoryUsage() {
  * @param lps
  * @return void
  */
-void kmpMatcher::computeLPS(const QString& pattern, QVector<int>& lps) {
-     int m = pattern.size();
-        int len = 0;
-        lps[0] = 0;
-        int i = 1;
-        while (i < m) {
-            if (pattern[i] == pattern[len]) {
-                len++;
-                lps[i] = len;
-                i++;
+vector<int> kmpMatcher::computeLPS (const string& pattern) {
+    int M = pattern.size ();
+    // length of the previous longest prefix suffix
+    int len = 0;
+
+    vector<int> lps (M); // lps[0] is always 0
+
+    // the loop calculates lps[i] for i = 1 to M-1
+    int i = 1;
+    while (i < M) {
+        if (pattern[i] == pattern[len]) {
+            len++;
+            lps[i] = len;
+            i++;
+        }
+        else // (pat[i] != pat[len])
+        {
+            // This is tricky. Consider the example.
+            // AAACAAAA and i = 7. The idea is similar
+            // to search step.
+            if (len != 0) {
+                len = lps[len - 1];
+
+                // Also, note that we do not increment
+                // i here
             }
-            else {
-                if (len != 0) {
-                    len = lps[len - 1];
-                }
-                else {
-                    lps[i] = 0;
-                    i++;
-                }
+            else // if (len == 0)
+            {
+                lps[i] = 0;
+                i++;
             }
         }
     }
+    return lps;
+}

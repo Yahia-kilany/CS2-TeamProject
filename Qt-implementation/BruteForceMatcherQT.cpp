@@ -1,51 +1,61 @@
 /**
-CS2 project: 2- Simple palagarism detection utility using QString matching
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
 #include "BruteForceMatcherQT.h"
+#include <algorithm>
+ /**
+  * BruteForceMatcher implementation
+  */
 
-/**
- * BruteForceMatcher implementation
- */
-
-QVector<QString> BruteForceMatcher::match(const Document& testDoc, const Corpus& corpus) {
-QVector<QString> matches;
-int threshold= 0;
-        QVector<QString> sentences = splitIntoSentences (testDoc);
-        for (const auto& s : sentences)
-        {
-            for (const auto& d : corpus.getDocuments()) {
-                    if(hammingDistance(s,d.getContent(),threshold)){
-                        matches.emplace_back (d.getTitle());
-                    break;
+map<string , double> BruteForceMatcher::match (const Document& testDoc , const Corpus& corpus) {
+    map<string , double> matches;
+    int threshold = 0;
+    vector<string> sentences = splitIntoSentences (testDoc);
+    for (const string& s : sentences)
+    {
+        for (const Document& d : corpus.getDocuments ()) {
+            if (hammingDistance (s , d.getContent () , threshold)) {
+                if (matches.find(d.getTitle()) == matches.end()) 
+                {
+                    matches.insert (pair<string , double> (d.getTitle () , s.size ()));
+                }
+                else {
+                    matches[d.getTitle ()] += s.size ();
                 }
             }
         }
-        return matches;
+        for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
+        {
+            itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
+        }
     }
+    return matches;
+}
+
+
+
+
 /**
  * @return size_t
  */
-size_t BruteForceMatcher::getMemoryUsage() {
-    return sizeof(*this);
+size_t BruteForceMatcher::getMemoryUsage () {
+    return sizeof (*this);
 }
 
-/**
- * @param pattern
- * @param text
- * @return int
- */
-bool BruteForceMatcher::hammingDistance(const QString& pattern, const QString& text, int threshold) {
-   int dist = 0;
-
-        for (int i = 0; i < text.size()-pattern.size(); i++) {
-            QString txtsub=text.mid(i,pattern.size());
-            if (pattern[i] != text[i]) {
+bool BruteForceMatcher::hammingDistance (const string& pattern , const string& text , int threshold) {
+    for (int i = 0; i < text.size () - pattern.size (); i++) {
+        int dist = 0;
+        string txtsub = text.substr (i , pattern.size ());
+        for (int j = 0; j < pattern.size ();j++)
+        {
+            if (pattern[j] != txtsub[j]) {
                 dist++;
             }
-            if(dist<=threshold)
-            {
-                return true;
-            }
         }
-        return false;
+        if (dist <= threshold)
+        {
+            return true;
+        }
     }
+    return false;
+}

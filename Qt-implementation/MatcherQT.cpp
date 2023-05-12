@@ -1,21 +1,30 @@
 /**
-CS2 project: 2- Simple palagarism detection utility using QString matching
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
 #include "MatcherQT.h"
 
-QVector<QString> Matcher::splitIntoSentences(const Document& doc) {
+/**
+ * Matcher implementation
+ */
 
-        QVector<QString> sentences;
-        QString sentence;
-        for (QChar c : doc.getContent()) {
+
+vector<string> Matcher::splitIntoSentences(const Document& doc) {
+
+        vector<string> sentences;
+        string sentence;
+        char c;
+        for (int i=0;i<doc.getContent().size();i++) {
+            c=doc.getContent().at(i);
             if (c == '.' || c == '?' || c == '!') {
-                if (!sentence.isEmpty()) {
+                if (!sentence.empty()) {
+                    i++;
                     sentences.push_back(sentence);
                     sentence.clear();
                 }
             }
             else if (c == '\n') {
-                if (!sentence.isEmpty()) {
+                if (!sentence.empty()) {
+                    i++;
                     sentences.push_back(sentence);
                     sentence.clear();
                 }
@@ -24,7 +33,7 @@ QVector<QString> Matcher::splitIntoSentences(const Document& doc) {
                 sentence.push_back(c);
             }
         }
-        if (!sentence.isEmpty()) {
+        if (!sentence.empty()) {
             sentences.push_back(sentence);
         }
         return sentences;

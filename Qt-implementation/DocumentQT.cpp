@@ -1,35 +1,40 @@
 /**
-CS2 project: 2- Simple palagarism detection utility using QString matching
+CS2 project: 2- Simple palagarism detection utility using string matching
  */
-
+ // This is a C++ program for a simple plagiarism detection utility using string matching
+ // The code includes the Document class, which has methods to set the title and content of a document,
+ // create a document object from a file, and retrieve the title and content of a document.
 #include "DocumentQT.h"
-#include <QFile>
+#include <fstream>
 #include <stdexcept>
-
-void Document::setTitle(QString str) {
+#include <iterator>
+#include <iostream>
+// set the title of the document to the given string
+void Document::setTitle(std::string str) {
     title = str;
 }
-
-void Document::setContent(QString str) {
+// set the content of the document to the given string
+void Document::setContent(std::string str) {
     content = str;
 }
+// create a new document object by reading from the specified file
+void Document::createFromFile(std::string filename) {
+    title=filename;
+    std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
+    if(!file.is_open())
+        throw std::runtime_error("Failed to open " + filename);
+    using Iterator = std::istreambuf_iterator<char>;
+    std::string cont(Iterator{file}, Iterator{});
+    if(!file)
+        throw std::runtime_error("Failed to read " + filename);
+    content= cont;
 
-void Document::createFromFile(QString filename) {
-        title=filename;
-        // Open the file in read-only mode
-        QFile file(filename);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            return;
-
-        // Read the contents of the file into a QString
-        content = file.readAll();
-
-        // Close the file
-        file.close();
-    }
-QString Document::getTitle() const {
+}
+// return the title of the document
+std::string Document::getTitle() const {
     return title;
 }
-QString Document::getContent() const {
+// return the content of the document
+std::string Document::getContent() const {
     return content;
 }

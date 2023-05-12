@@ -2,13 +2,13 @@
 CS2 project: 2- Simple palagarism detection utility using string matching
  */
 
-#include "corpusQT.h"
+#include "CorpusQT.h"
 
 void Corpus::addDocument(Document Doc) {
     Documents.push_back(Doc);
     return;
 }
-QVector<Document> Corpus::getDocuments() const{
+vector<Document> Corpus::getDocuments() const{
     return Documents;
 }
 Document Corpus::getDocument(int index) const

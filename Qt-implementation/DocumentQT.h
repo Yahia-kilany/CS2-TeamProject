@@ -5,23 +5,23 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 
 #ifndef _DOCUMENTQT_H
 #define _DOCUMENTQT_H
-#include <QString>
+#include <string>
 using namespace std;
 class Document {
 public:
 
-    void setTitle (QString str);
+    void setTitle (std::string str);
 
-    void setContent (QString str);
+    void setContent (std::string str);
 
-    void createFromFile (QString filename);
+    void createFromFile (std::string filename);
 
-    QString  getTitle () const;
+    std::string  getTitle () const;
 
-    QString  getContent () const;
+    std::string  getContent () const;
 private:
-    QString title;
-    QString content;
+    std::string title;
+    std::string content;
 };
 
 #endif //_DOCUMENTQT_H
