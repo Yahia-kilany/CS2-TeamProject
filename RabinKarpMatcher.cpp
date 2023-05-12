@@ -23,11 +23,11 @@ map<string , double> RabinKarpMatcher::match (const Document& testDoc , const Co
                 }
             }
         }
+    }
         for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
         {
             itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
         }
-    }
     return matches;
 }
 size_t RabinKarpMatcher::getMemoryUsage () {

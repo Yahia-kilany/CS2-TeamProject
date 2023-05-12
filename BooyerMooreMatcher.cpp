@@ -19,11 +19,11 @@ map<string,double> BooyerMooreMatcher::match(const Document& testDoc, const Corp
                 }
         }
         }
+    }
         for(map<string,double>::iterator itr=matches.begin();itr!=matches.end();itr++)
         {
             itr->second=(itr->second/testDoc.getContent().size())*100;
         }
-    }
     return matches;
 }
 

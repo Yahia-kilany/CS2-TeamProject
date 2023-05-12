@@ -24,11 +24,11 @@ map<string , double> BruteForceMatcher::match (const Document& testDoc , const C
                 }
             }
         }
+    }
         for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
         {
             itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
         }
-    }
     return matches;
 }
 
