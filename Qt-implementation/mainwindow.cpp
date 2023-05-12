@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QElapsedTimer"
 #include "viewcorpus.h"
 #include <QString>
+#include <QTime>
+#include <chrono>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -17,30 +18,35 @@ void MainWindow::setCorpus(Corpus C)
 {
     corpus=C;
 }
-
+void MainWindow::setTestDoc(Document doc)
+{
+    testdoc=doc;
+}
 
 void MainWindow::on_BruteForce_clicked()
 {
+    ui->results->setText("");
     if(testdoc.getContent().isEmpty())
     {
         ui->results->setText("error: testdoc is empty\n");
                 return;
     }
-    QElapsedTimer Timer;
-    Timer.start();
-    QVector<QString> results= bruteForceMatcher.match(testdoc,corpus);
-    auto time=Timer.elapsed();
-    if(results.empty()){
+    QMap<QString,double> matches;
+    auto start = chrono::high_resolution_clock::now ();
+    matches = bruteForceMatcher.match(testdoc,corpus);
+    auto end = chrono::high_resolution_clock::now();
+    double time= chrono::duration_cast<chrono::microseconds>(end - start).count ();
+    if(matches.empty()){
         ui->results->setText("The test document is not plagarised \n");
-        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+" bytes\n");
+        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+"milliseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+" bytes\n");
         return;
     }
     ui->results->setText("The test document was plagarised from the following documents from the corpus \n");
-    for(QVector<QString>::iterator itr=results.begin();itr!=results.end();itr++)
-    {
-        ui->results->setText(ui->results->text()+*itr+"\n");
-    }
-    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+"\n");
+    QMap<QString, double>::iterator i;
+    for (i =matches.begin(); i != matches.end(); ++i){
+        ui->results->setText(ui->results->text()+i.key()+" with similarity of "+ QString::number(i.value())+"%\n");
+     }
+    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+" milliseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+"\n");
 }
 
 
@@ -48,83 +54,87 @@ void MainWindow::on_addTest_clicked()
 {
     testdoc.setTitle("test document");
     testdoc.setContent(ui->lineEdit->text());
+    ui->lineEdit->setText("");
 }
 
 
 void MainWindow::on_RabinKarp_clicked()
 {
+    ui->results->setText("");
     if(testdoc.getContent().isEmpty())
     {
         ui->results->setText("error: testdoc is empty\n");
                 return;
     }
-    QElapsedTimer Timer;
-    Timer.start();
-    QVector<QString> results= rabinKarpMatcher.match(testdoc,corpus);
-    auto time=Timer.elapsed();
-    if(results.empty()){
+    QMap<QString,double> matches;
+    auto start = chrono::high_resolution_clock::now ();
+    matches=rabinKarpMatcher.match(testdoc,corpus);
+    auto end = chrono::high_resolution_clock::now();
+    double time= chrono::duration_cast<chrono::microseconds>(end - start).count ();
+        if(matches.empty()){
         ui->results->setText("The test document is not plagarised \n");
-        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(rabinKarpMatcher.getMemoryUsage())+" bytes\n");
+        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+"milliseconds\n"+"The algorithm occubied: "+QString::number(rabinKarpMatcher.getMemoryUsage())+" bytes\n");
         return;
     }
     ui->results->setText("The test document was plagarised from the following documents from the corpus \n");
-    for(QVector<QString>::iterator itr=results.begin();itr!=results.end();itr++)
-    {
-        ui->results->setText(ui->results->text()+*itr+"\n");
-    }
-    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(rabinKarpMatcher.getMemoryUsage())+" bytes\n");
+    QMap<QString, double>::iterator i;
+    for (i =matches.begin(); i != matches.end(); ++i){
+        ui->results->setText(ui->results->text()+i.key()+" with similarity of "+ QString::number(i.value())+"\n");
+     }
+    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+" milliseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+"\n");
 }
-
 
 void MainWindow::on_KMP_clicked()
 {
-
+    ui->results->setText("");
     if(testdoc.getContent().isEmpty())
     {
         ui->results->setText("error: testdoc is empty\n");
         return;
     }
-    QElapsedTimer Timer;
-    Timer.start();
-    QVector<QString> results= kmpmatcher.match(testdoc,corpus);
-    auto time=Timer.elapsed();
-    if(results.empty()){
+    QMap<QString,double> matches;
+    auto start = chrono::high_resolution_clock::now ();
+    matches=kmpmatcher.match(testdoc,corpus);
+    auto end = chrono::high_resolution_clock::now();
+    double time= chrono::duration_cast<chrono::microseconds>(end - start).count ();
+    if(matches.empty()){
         ui->results->setText("The test document is not plagarised \n");
-        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(kmpmatcher.getMemoryUsage())+" bytes\n");
+        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+"milliseconds\n"+"The algorithm occubied: "+QString::number(kmpmatcher.getMemoryUsage())+" bytes\n");
         return;
     }
     ui->results->setText("The test document was plagarised from the following documents from the corpus \n");
-    for(QVector<QString>::iterator itr=results.begin();itr!=results.end();itr++)
-    {
-        ui->results->setText(ui->results->text()+*itr+"\n");
-    }
-    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(kmpmatcher.getMemoryUsage())+" bytes\n");
+    QMap<QString, double>::iterator i;
+    for (i =matches.begin(); i != matches.end(); ++i){
+        ui->results->setText(ui->results->text()+i.key()+" with similarity of "+ QString::number(i.value())+"\n");
+     }
+    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+" miliseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+"\n");
 }
-
 
 
 void MainWindow::on_BooyerMoore_clicked()
 {
+    ui->results->setText("");
     if(testdoc.getContent().isEmpty())
     {
         ui->results->setText("error: testdoc is empty\n");
         return;
     }
-    QElapsedTimer Timer;
-    Timer.start();
-    QVector<QString> results= booyerMooreMatcher.match(testdoc,corpus);
-    auto time=Timer.elapsed();
-    if(results.empty()){
+    QMap<QString,double> matches;
+    auto start = chrono::high_resolution_clock::now ();
+    matches=booyerMooreMatcher.match(testdoc,corpus);
+    auto end = chrono::high_resolution_clock::now();
+    double time= chrono::duration_cast<chrono::microseconds>(end - start).count ();
+    if(matches.empty()){
         ui->results->setText("The test document is not plagarised \n");
-        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(booyerMooreMatcher.getMemoryUsage())+" bytes\n");
+        ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+"milliseconds\n"+"The algorithm occubied: "+QString::number(booyerMooreMatcher.getMemoryUsage())+" bytes\n");
         return;
     }
     ui->results->setText("The test document was plagarised from the following documents from the corpus \n");
-    for(QVector<QString>::iterator itr=results.begin();itr!=results.end();itr++)
-    {
-        ui->results->setText(ui->results->text()+*itr+"\n");
-    }
-    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time)+"milliseconds\n"+"The algorithm occubied: "+QString::number(booyerMooreMatcher.getMemoryUsage())+" bytes\n");
+    QMap<QString, double>::iterator i;
+    for (i =matches.begin(); i != matches.end(); ++i){
+        ui->results->setText(ui->results->text()+i.key()+" with similarity of "+ QString::number(i.value())+"\n");
+     }
+    ui->results->setText(ui->results->text()+"The algorithm took: "+QString::number(time,'f',2)+" nanoseconds\n"+"The algorithm occubied: "+QString::number(bruteForceMatcher.getMemoryUsage())+"\n");
 }
 
 
@@ -132,7 +142,18 @@ void MainWindow::on_VeiwCorpus_clicked()
 {
     corpuswindow= new ViewCorpus();
     corpuswindow->setCorpus(corpus);
+    corpuswindow->setTestDoc(testdoc);
     corpuswindow->show();
     this->close();
+}
+
+
+void MainWindow::on_addToCorpus_clicked()
+{
+    Document doc;
+    doc.setTitle("corpusDoc#"+QString::number(corpus.getDocuments().size()+1));
+    doc.setContent(ui->lineEdit->text());
+    ui->lineEdit->setText("");
+    corpus.addDocument(doc);
 }
 

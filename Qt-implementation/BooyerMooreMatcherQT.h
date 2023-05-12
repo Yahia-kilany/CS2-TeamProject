@@ -1,5 +1,5 @@
 /**
- * CS2 project: 2- Simple palagarism detection utility using string matching
+ * CS2 project: 2- Simple palagarism detection utility using QString matching
  */
 #ifndef _BOOYERMOOREMATCHERQT_H
 #define _BOOYERMOOREMATCHERQT_H
@@ -10,17 +10,17 @@
 class BooyerMooreMatcher : public Matcher {
 public:
 
-    map<string,double> match (const Document& testDoc , const Corpus& corpus);
+    QMap<QString,double> match (const Document& testDoc , const Corpus& corpus);
 
     size_t getMemoryUsage ();
 private:
-    bool BoyerMooreAlgorithm (string text , string pattern) {
+    bool BoyerMooreAlgorithm (QString text , QString pattern) {
         int s = 0 , j;
         int m = pattern.length ();
         int n = text.length ();
-        vector<int> borderPosition (m + 1) , shift (m + 1 , 0);
-        preprocess_suffix (shift , borderPosition , &pattern[0] , m);
-        preprocess_prefix (shift , borderPosition , &pattern[0] , m);
+        QVector<int> borderPosition (m + 1) , shift (m + 1 , 0);
+        preprocess_suffix (shift , borderPosition , pattern , m);
+        preprocess_prefix (shift , borderPosition , pattern , m);
 
         while (s <= n - m) {
             j = m - 1;
@@ -35,7 +35,7 @@ private:
 
         return false;
     }
-    void preprocess_suffix (vector<int>& shift , vector<int>& borderPosition , const string& pattern , int m) {
+    void preprocess_suffix (QVector<int>& shift , QVector<int>& borderPosition , const QString& pattern , int m) {
         int i = m , j = m + 1;
         borderPosition[i] = j;
 
@@ -50,7 +50,7 @@ private:
             borderPosition[i] = j;
         }
     }
-    void preprocess_prefix (vector<int>& shift , vector<int>& borderPosition , const string& pattern , int m) {
+    void preprocess_prefix (QVector<int>& shift , QVector<int>& borderPosition , const QString& pattern , int m) {
         int i , j;
         j = borderPosition[0];
         for (i = 0; i <= m; i++) {

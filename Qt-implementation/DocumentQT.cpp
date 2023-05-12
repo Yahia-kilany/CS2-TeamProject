@@ -8,33 +8,32 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 #include <fstream>
 #include <stdexcept>
 #include <iterator>
-#include <iostream>
 // set the title of the document to the given string
-void Document::setTitle(std::string str) {
+void Document::setTitle(QString str) {
     title = str;
 }
 // set the content of the document to the given string
-void Document::setContent(std::string str) {
+void Document::setContent(QString str) {
     content = str;
 }
 // create a new document object by reading from the specified file
-void Document::createFromFile(std::string filename) {
-    title=filename;
-    std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
-    if(!file.is_open())
-        throw std::runtime_error("Failed to open " + filename);
-    using Iterator = std::istreambuf_iterator<char>;
-    std::string cont(Iterator{file}, Iterator{});
-    if(!file)
-        throw std::runtime_error("Failed to read " + filename);
-    content= cont;
+//void Document::createFromFile(QString filename) {
+//    title=filename;
+//    std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
+//    if(!file.is_open())
+//        throw std::runtime_error("Failed to open " + filename);
+//    using Iterator = std::istreambuf_iterator<char>;
+//    QString cont(Iterator{file}, Iterator{});
+//    if(!file)
+//        throw std::runtime_error("Failed to read " + filename);
+//    content= cont;
 
-}
+//}
 // return the title of the document
-std::string Document::getTitle() const {
+QString Document::getTitle() const {
     return title;
 }
 // return the content of the document
-std::string Document::getContent() const {
+QString Document::getContent() const {
     return content;
 }

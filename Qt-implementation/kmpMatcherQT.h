@@ -12,20 +12,20 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 class kmpMatcher: public Matcher {
 public:
 
-    map<string,double> match (const Document& testDoc , const Corpus& corpus);
+    QMap<QString,double> match (const Document& testDoc , const Corpus& corpus);
 
     size_t getMemoryUsage ();
 private:
 
-    vector<int> computeLPS (const std::string& pattern);
+    QVector<int> computeLPS (const QString& pattern);
 
-bool KMPSearch(const std::string& pat, const std::string& txt) {
+bool KMPSearch(const QString& pat, const QString& txt) {
     int M = pat.length();
     int N = txt.length();
 
     // create lps[] that will hold the longest prefix suffix
     // values for pattern
-    vector<int> lps= computeLPS(pat);
+    QVector<int> lps= computeLPS(pat);
 
     int i = 0; // index for txt[]
     int j = 0; // index for pat[]

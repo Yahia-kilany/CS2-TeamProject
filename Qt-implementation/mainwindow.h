@@ -24,6 +24,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setCorpus(Corpus C);
+    void setTestDoc(Document doc);
 
 private slots:
     void on_BruteForce_clicked();
@@ -37,6 +38,8 @@ private slots:
     void on_BooyerMoore_clicked();
 
     void on_VeiwCorpus_clicked();
+
+    void on_addToCorpus_clicked();
 
 private:
     Document testdoc;

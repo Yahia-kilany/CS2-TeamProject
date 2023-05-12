@@ -11,10 +11,10 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 
 class BruteForceMatcher: public Matcher {
 public:
-    map<string,double> match (const Document& testDoc , const Corpus& corpus);
+    QMap<QString,double> match (const Document& testDoc , const Corpus& corpus);
     size_t getMemoryUsage ();
 private:
-    bool hammingDistance (const std::string& pattern , const std::string& text, int threshold);
+    bool hammingDistance (const QString& pattern , const QString& text, int threshold);
 };
 
 #endif //_BRUTEFORCEMATCHERQT_H

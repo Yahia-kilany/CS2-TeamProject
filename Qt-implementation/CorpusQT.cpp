@@ -8,7 +8,7 @@ void Corpus::addDocument(Document Doc) {
     Documents.push_back(Doc);
     return;
 }
-vector<Document> Corpus::getDocuments() const{
+QVector<Document> Corpus::getDocuments() const{
     return Documents;
 }
 Document Corpus::getDocument(int index) const

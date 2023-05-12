@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {font-weight: bold;color: black;}</string>
+  </property>
   <widget class="QLabel" name="documentTitle">
    <property name="geometry">
     <rect>
@@ -36,10 +39,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="Next">
    <property name="geometry">
     <rect>
      <x>700</x>
@@ -55,7 +58,7 @@
     <string>Next</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="back">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -68,7 +71,7 @@
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="Return">
    <property name="geometry">
     <rect>
      <x>340</x>
@@ -79,6 +82,32 @@
    </property>
    <property name="text">
     <string>Return</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>10</y>
+     <width>111</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>151</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show the test document</string>
    </property>
   </widget>
  </widget>

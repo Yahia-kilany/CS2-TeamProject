@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QPushButton {font-weight: bold;color: black;}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="results">
@@ -87,7 +87,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>161</width>
+      <width>181</width>
       <height>51</height>
      </rect>
     </property>

@@ -1,5 +1,5 @@
 /**
-CS2 project: 2- Simple palagarism detection utility using string matching
+CS2 project: 2- Simple palagarism detection utility using QString matching
  */
 
 
@@ -14,32 +14,32 @@ CS2 project: 2- Simple palagarism detection utility using string matching
  /**
   * @param testDoc
   * @param corpus
-  * @return vector<string>
+  * @return QVector<QString>
   */
-map<string , double> kmpMatcher::match (const Document& testDoc , const Corpus& corpus) {
-    map <string , double> matches;
-    vector<string> sentences = splitIntoSentences (testDoc);
-    for (const string& s : sentences) {
+QMap<QString , double> kmpMatcher::match (const Document& testDoc , const Corpus& corpus) {
+    QMap <QString , double> matches;
+    QVector<QString> sentences = splitIntoSentences (testDoc);
+    for (const QString& s : sentences) {
         for (const Document& d : corpus.getDocuments ()) {
 
             if (KMPSearch (s , d.getContent()))
             {
                 if (matches.find (d.getTitle ()) == matches.end ())
                 {
-                    matches.insert (pair<string , double> (d.getTitle () , s.size ()));
+                    matches.insert (d.getTitle () , s.size ());
                 }
                 else {
                     matches[d.getTitle ()] += s.size ();
                 }
             }
         }
-        for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
-        {
-            itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
-        }
     }
-    return matches;
-}
+    QMap<QString, double>::iterator i;
+            for (i =matches.begin(); i != matches.end(); ++i){
+                double newval=(i.value()/testDoc.getContent().size()*100);
+                i.value() = newval;
+            }
+        return matches;}
 
 /**
  * @return size_t
@@ -53,12 +53,12 @@ size_t kmpMatcher::getMemoryUsage () {
  * @param lps
  * @return void
  */
-vector<int> kmpMatcher::computeLPS (const string& pattern) {
+QVector<int> kmpMatcher::computeLPS (const QString& pattern) {
     int M = pattern.size ();
     // length of the previous longest prefix suffix
     int len = 0;
 
-    vector<int> lps (M); // lps[0] is always 0
+    QVector<int> lps (M); // lps[0] is always 0
 
     // the loop calculates lps[i] for i = 1 to M-1
     int i = 1;

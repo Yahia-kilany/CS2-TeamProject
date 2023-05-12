@@ -73,21 +73,21 @@ int main () {
     bruteForceMatcher.match (testdoc , corpus);
     auto end = chrono::high_resolution_clock::now ();
     auto bfDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The brute Force took :" << bfDuration << " ms" << " to excute" << endl;
+    cout << "The brute Force took :" << bfDuration << " microseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
     rabinKarpMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
     auto rkDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The rabin karp took :" << rkDuration << " ms" << " to excute" << endl;
+    cout << "The rabin karp took :" << rkDuration << " microseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
     kmpMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
     auto kmpDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The KMP took :" << kmpDuration << " ms" << " to excute" << endl;
+    cout << "The KMP took :" << kmpDuration << " microseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
     booyerMooreMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
     auto bmDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The Booyer Moore took :" << bmDuration << " ms" << " to excute" << endl;
+    cout << "The Booyer Moore took :" << bmDuration << " microseconds" << " to excute" << endl;
     return 0;
 }
