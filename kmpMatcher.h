@@ -12,7 +12,7 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 class kmpMatcher: public Matcher {
 public:
 
-    std::vector<std::string> match (const Document& testDoc , const Corpus& corpus);
+    map<string,double> match (const Document& testDoc , const Corpus& corpus);
 
     size_t getMemoryUsage ();
 private:

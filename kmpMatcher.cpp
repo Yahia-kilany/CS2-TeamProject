@@ -16,19 +16,27 @@ CS2 project: 2- Simple palagarism detection utility using string matching
   * @param corpus
   * @return vector<string>
   */
-vector<string> kmpMatcher::match (const Document& testDoc , const Corpus& corpus) {
-    vector<string> matches;
+map<string , double> kmpMatcher::match (const Document& testDoc , const Corpus& corpus) {
+    map <string , double> matches;
     vector<string> sentences = splitIntoSentences (testDoc);
     for (const string& s : sentences) {
         for (const Document& d : corpus.getDocuments ()) {
-            if(KMPSearch(s,d.getContent()))
+
+            if (KMPSearch (s , d.getContent()))
             {
-                if ( std::find(matches.begin(), matches.end(), d.getTitle()) == matches.end() )
-                        {
-                        matches.emplace_back (d.getTitle());
-                        }
+                if (matches.find (d.getTitle ()) == matches.end ())
+                {
+                    matches.insert (pair<string , double> (d.getTitle () , s.size ()));
+                }
+                else {
+                    matches[d.getTitle ()] += s.size ();
+                }
             }
-            }
+        }
+        for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
+        {
+            itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
+        }
     }
     return matches;
 }
@@ -46,11 +54,11 @@ size_t kmpMatcher::getMemoryUsage () {
  * @return void
  */
 vector<int> kmpMatcher::computeLPS (const string& pattern) {
-    int M = pattern.size();
+    int M = pattern.size ();
     // length of the previous longest prefix suffix
     int len = 0;
 
-    vector<int> lps(M); // lps[0] is always 0
+    vector<int> lps (M); // lps[0] is always 0
 
     // the loop calculates lps[i] for i = 1 to M-1
     int i = 1;
