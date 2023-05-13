@@ -19,15 +19,15 @@ void Document::setContent(std::string str) {
 }
 // create a new document object by reading from the specified file
 void Document::createFromFile(std::string filename) {
-    title=filename;
-    std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
-    if(!file.is_open())
-        throw std::runtime_error("Failed to open " + filename);
+    title = filename;// set the title of the document to the filename
+    std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);// open the file in binary input mode
+    if (!file.is_open()) // if the file failed to open
+        throw std::runtime_error("Failed to open " + filename);// throw an exception with an error message
     using Iterator = std::istreambuf_iterator<char>;
-    std::string cont(Iterator{file}, Iterator{});
-    if(!file)
-        throw std::runtime_error("Failed to read " + filename);
-    content= cont;
+    std::string cont(Iterator{ file }, Iterator{});// read the content of the file into a string
+    if (!file) // if the read operation failed
+        throw std::runtime_error("Failed to read " + filename); // throw an exception with an error message
+    content = cont; // set the content of the document to the string containing the file's content
 
 }
 // return the title of the document
