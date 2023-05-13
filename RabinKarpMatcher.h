@@ -17,10 +17,6 @@ public:
 private:
 
     bool RabinKarpSearch (const std::string& text , const std::string& pattern , int q);
-    // int calculateHash (const std::string& str , int start , int end , int prime);
-
-
-    // bool isEqual (const std::string& str1 , int start1 , int end1 , const std::string& str2 , int start2 , int end2);
 };
 
 #endif //_RABINKARPMATCHER_H
