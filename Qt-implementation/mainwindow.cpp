@@ -39,15 +39,15 @@ void MainWindow::on_BruteForce_clicked ()
     double time = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
     if (matches.empty ()) {
         ui->results->setText ("The test document is not plagarised \n");
-        ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + "nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + " bytes\n");
+        ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time) + "nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + " bytes\n");
         return;
     }
     ui->results->setText ("The test document was plagarised from the following documents from the corpus \n");
     QMap<QString , double>::iterator i;
     for (i = matches.begin (); i != matches.end (); ++i) {
-        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value ()) + "%\n");
+        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value (),'f',2) + "%\n");
     }
-    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
+    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
 }
 
 
@@ -80,9 +80,9 @@ void MainWindow::on_RabinKarp_clicked ()
     ui->results->setText ("The test document was plagarised from the following documents from the corpus \n");
     QMap<QString , double>::iterator i;
     for (i = matches.begin (); i != matches.end (); ++i) {
-        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value ()) + "\n");
+        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value (),'f',2) + "\n");
     }
-    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
+    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
 }
 
 void MainWindow::on_KMP_clicked ()
@@ -100,15 +100,15 @@ void MainWindow::on_KMP_clicked ()
     double time = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
     if (matches.empty ()) {
         ui->results->setText ("The test document is not plagarised \n");
-        ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + "nanoseconds\n" + "The algorithm occubied: " + QString::number (kmpmatcher.getMemoryUsage ()) + " bytes\n");
+        ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time ) + "nanoseconds\n" + "The algorithm occubied: " + QString::number (kmpmatcher.getMemoryUsage ()) + " bytes\n");
         return;
     }
     ui->results->setText ("The test document was plagarised from the following documents from the corpus \n");
     QMap<QString , double>::iterator i;
     for (i = matches.begin (); i != matches.end (); ++i) {
-        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value ()) + "\n");
+        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value (),'f,2') + "\n");
     }
-    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
+    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time ) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
 }
 
 
@@ -127,15 +127,15 @@ void MainWindow::on_BooyerMoore_clicked ()
     double time = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
     if (matches.empty ()) {
         ui->results->setText ("The test document is not plagarised \n");
-        ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + "nanoseconds\n" + "The algorithm occubied: " + QString::number (booyerMooreMatcher.getMemoryUsage ()) + " bytes\n");
+        ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time) + "nanoseconds\n" + "The algorithm occubied: " + QString::number (booyerMooreMatcher.getMemoryUsage ()) + " bytes\n");
         return;
     }
     ui->results->setText ("The test document was plagarised from the following documents from the corpus \n");
     QMap<QString , double>::iterator i;
     for (i = matches.begin (); i != matches.end (); ++i) {
-        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value ()) + "\n");
+        ui->results->setText (ui->results->text () + i.key () + " with similarity of " + QString::number (i.value (),'f',2) + "\n");
     }
-    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time , 'f' , 2) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
+    ui->results->setText (ui->results->text () + "The algorithm took: " + QString::number (time ) + " nanoseconds\n" + "The algorithm occubied: " + QString::number (bruteForceMatcher.getMemoryUsage ()) + "\n");
 }
 
 
