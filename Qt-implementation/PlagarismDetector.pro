@@ -9,7 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    BooyerMooreMatcherQT.cpp \
+    BoyerMooreMatcherQT.cpp \
     BruteForceMatcherQT.cpp \
     CorpusQT.cpp \
     DocumentQT.cpp \
@@ -21,7 +21,7 @@ SOURCES += \
     viewcorpus.cpp
 
 HEADERS += \
-    BooyerMooreMatcherQT.h \
+    BoyerMooreMatcherQT.h \
     BruteForceMatcherQT.h \
     CorpusQT.h \
     DocumentQT.h \

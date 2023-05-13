@@ -12,7 +12,7 @@ map<string , double> RabinKarpMatcher::match (const Document& testDoc , const Co
     for (const string& s : sentences) {
         for (const Document& d : corpus.getDocuments ()) {
 
-            if (RabinKarp (d.getContent () , s , prime))
+            if (RabinKarpSearch (d.getContent () , s , prime))
             {
                 if (matches.find (d.getTitle ()) == matches.end ())
                 {
@@ -24,14 +24,54 @@ map<string , double> RabinKarpMatcher::match (const Document& testDoc , const Co
             }
         }
     }
-        for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
-        {
-            itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
-        }
+    for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
+    {
+        itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
+    }
     return matches;
 }
 size_t RabinKarpMatcher::getMemoryUsage () {
     return sizeof (*this);
+}
+bool RabinKarpMatcher::RabinKarpSearch (const string& text , const string& pattern , int q)
+{
+    int m = pattern.length ();
+    int n = text.length ();
+    int i , j;
+    int p = 0;
+    int t = 0;
+    int h = 1;
+    int d = 256;
+
+    for (i = 0; i < m - 1; i++)
+        h = (h * d) % q;
+
+    // hash value for string and pattern
+    for (i = 0; i < m; i++) {
+        p = (d * p + pattern[i]) % q;
+        t = (d * t + text[i]) % q;
+    }
+
+    // Find the match
+    for (i = 0; i <= n - m; i++) {
+        if (p == t) {
+            for (j = 0; j < m; j++) {
+                if (pattern[j] != text[i + j])
+                    break;
+            }
+
+            if (j == m)
+                return true;
+        }
+
+        if (i < n - m) {
+            t = (d * (t - text[i] * h) + text[i + m]) % q;
+
+            if (t < 0)
+                t = (t + q);
+        }
+    }
+    return false;
 }
 
 // int RabinKarpMatcher::calculateHash(const string& str, int start, int end, int prime) {

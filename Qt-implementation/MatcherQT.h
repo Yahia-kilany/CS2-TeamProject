@@ -16,7 +16,7 @@ public:
 
     virtual size_t getMemoryUsage () = 0;
 
-    virtual QMap<QString,double> match (const Document& testDoc , const Corpus& corpus) = 0;
+    virtual QMap<QString , double> match (const Document& testDoc , const Corpus& corpus) = 0;
 protected:
 
     QVector<QString> splitIntoSentences (const Document& doc);

@@ -9,11 +9,11 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 #include <stdexcept>
 #include <iterator>
 // set the title of the document to the given string
-void Document::setTitle(QString str) {
+void Document::setTitle (QString str) {
     title = str;
 }
 // set the content of the document to the given string
-void Document::setContent(QString str) {
+void Document::setContent (QString str) {
     content = str;
 }
 // create a new document object by reading from the specified file
@@ -30,10 +30,10 @@ void Document::setContent(QString str) {
 
 //}
 // return the title of the document
-QString Document::getTitle() const {
+QString Document::getTitle () const {
     return title;
 }
 // return the content of the document
-QString Document::getContent() const {
+QString Document::getContent () const {
     return content;
 }

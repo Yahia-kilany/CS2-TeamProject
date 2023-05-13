@@ -15,9 +15,9 @@ QMap<QString , double> BruteForceMatcher::match (const Document& testDoc , const
     {
         for (const Document& d : corpus.getDocuments ()) {
             if (hammingDistance (s , d.getContent () , threshold)) {
-                if (matches.find(d.getTitle()) == matches.end()) 
+                if (matches.find (d.getTitle ()) == matches.end ())
                 {
-                    matches.insert ( d.getTitle () , s.size ());
+                    matches.insert (d.getTitle () , s.size ());
                 }
                 else {
                     matches[d.getTitle ()] += s.size ();
@@ -25,12 +25,12 @@ QMap<QString , double> BruteForceMatcher::match (const Document& testDoc , const
             }
         }
     }
-    QMap<QString, double>::iterator i;
-            for (i =matches.begin(); i != matches.end(); ++i){
-                double newval=(i.value()/testDoc.getContent().size()*100);
-                i.value() = newval;
-            }
-        return matches;
+    QMap<QString , double>::iterator i;
+    for (i = matches.begin (); i != matches.end (); ++i) {
+        double newval = (i.value () / testDoc.getContent ().size () * 100);
+        i.value () = newval;
+    }
+    return matches;
 }
 
 

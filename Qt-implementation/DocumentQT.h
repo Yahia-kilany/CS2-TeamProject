@@ -13,14 +13,14 @@ public:
 
     void setContent (QString str);
 
-//    void createFromFile (QString filename);
+    //    void createFromFile (QString filename);
 
     QString  getTitle () const;
 
     QString  getContent () const;
 private:
-    QString title;
-    QString content;
+    QString title = "";
+    QString content = "";
 };
 
 #endif //_DOCUMENTQT_H

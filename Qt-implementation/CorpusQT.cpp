@@ -4,16 +4,16 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 
 #include "CorpusQT.h"
 
-void Corpus::addDocument(Document Doc) {
-    Documents.push_back(Doc);
+void Corpus::addDocument (Document Doc) {
+    Documents.push_back (Doc);
     return;
 }
-QVector<Document> Corpus::getDocuments() const{
+QVector<Document> Corpus::getDocuments () const {
     return Documents;
 }
-Document Corpus::getDocument(int index) const
+Document Corpus::getDocument (int index) const
 {
-    if(index>Documents.size())
-        exit(1);
+    if (index > Documents.size ())
+        exit (1);
     return Documents[index];
 }

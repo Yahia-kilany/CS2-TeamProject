@@ -22,7 +22,7 @@ QMap<QString , double> kmpMatcher::match (const Document& testDoc , const Corpus
     for (const QString& s : sentences) {
         for (const Document& d : corpus.getDocuments ()) {
 
-            if (KMPSearch (s , d.getContent()))
+            if (KMPSearch (s , d.getContent ()))
             {
                 if (matches.find (d.getTitle ()) == matches.end ())
                 {
@@ -34,18 +34,53 @@ QMap<QString , double> kmpMatcher::match (const Document& testDoc , const Corpus
             }
         }
     }
-    QMap<QString, double>::iterator i;
-            for (i =matches.begin(); i != matches.end(); ++i){
-                double newval=(i.value()/testDoc.getContent().size()*100);
-                i.value() = newval;
-            }
-        return matches;}
+    QMap<QString , double>::iterator i;
+    for (i = matches.begin (); i != matches.end (); ++i) {
+        double newval = (i.value () / testDoc.getContent ().size () * 100);
+        i.value () = newval;
+    }
+    return matches;
+}
 
 /**
  * @return size_t
  */
 size_t kmpMatcher::getMemoryUsage () {
     return sizeof (*this);
+}
+bool kmpMatcher::KMPSearch (const QString& pat , const QString& txt)
+{
+    int M = pat.length ();
+    int N = txt.length ();
+
+    // create lps[] that will hold the longest prefix suffix
+    // values for pattern
+    QVector<int> lps = computeLPS (pat);
+
+    int i = 0; // index for txt[]
+    int j = 0; // index for pat[]
+    while (i < N) {
+        if (pat[j] == txt[i]) {
+            j++;
+            i++;
+        }
+
+        if (j == M) {
+            return true;
+        }
+
+        // mismatch after j matches
+        else if (i < N && pat[j] != txt[i]) {
+            // Do not match lps[0..lps[j-1]] characters,
+            // they will match anyway
+            if (j != 0)
+                j = lps[j - 1];
+            else
+                i = i + 1;
+        }
+    }
+
+    return false;
 }
 
 /**

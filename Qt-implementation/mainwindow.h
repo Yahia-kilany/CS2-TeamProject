@@ -7,7 +7,7 @@
 #include "MatcherQT.h"
 #include "BruteForceMatcherQT.h"
 #include "RabinKarpMatcherQT.h"
-#include "BooyerMooreMatcherQT.h"
+#include "BoyerMooreMatcherQT.h"
 #include "kmpMatcherQT.h"
 #include <QVector>
 #include <QString>
@@ -21,34 +21,34 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-    void setCorpus(Corpus C);
-    void setTestDoc(Document doc);
+    MainWindow (QWidget* parent = nullptr);
+    ~MainWindow ();
+    void setCorpus (Corpus C);
+    void setTestDoc (Document doc);
 
 private slots:
-    void on_BruteForce_clicked();
+    void on_BruteForce_clicked ();
 
-    void on_addTest_clicked();
+    void on_addTest_clicked ();
 
-    void on_RabinKarp_clicked();
+    void on_RabinKarp_clicked ();
 
-    void on_KMP_clicked();
+    void on_KMP_clicked ();
 
-    void on_BooyerMoore_clicked();
+    void on_BooyerMoore_clicked ();
 
-    void on_VeiwCorpus_clicked();
+    void on_VeiwCorpus_clicked ();
 
-    void on_addToCorpus_clicked();
+    void on_addToCorpus_clicked ();
 
 private:
     Document testdoc;
     Corpus corpus;
     BruteForceMatcher bruteForceMatcher;
     RabinKarpMatcher rabinKarpMatcher;
-    BooyerMooreMatcher booyerMooreMatcher;
+    BoyerMooreMatcher booyerMooreMatcher;
     kmpMatcher kmpmatcher;
     ViewCorpus* corpuswindow;
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
 };
 #endif // MAINWINDOW_H

@@ -22,7 +22,7 @@ map<string , double> kmpMatcher::match (const Document& testDoc , const Corpus& 
     for (const string& s : sentences) {
         for (const Document& d : corpus.getDocuments ()) {
 
-            if (KMPSearch (s , d.getContent()))
+            if (KMPSearch (s , d.getContent ()))
             {
                 if (matches.find (d.getTitle ()) == matches.end ())
                 {
@@ -34,10 +34,10 @@ map<string , double> kmpMatcher::match (const Document& testDoc , const Corpus& 
             }
         }
     }
-        for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
-        {
-            itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
-        }
+    for (map<string , double>::iterator itr = matches.begin ();itr != matches.end ();itr++)
+    {
+        itr->second = (itr->second / testDoc.getContent ().size ()) * 100;
+    }
     return matches;
 }
 

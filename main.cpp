@@ -7,7 +7,7 @@
 #include "BruteForceMatcher.h"
 #include "RabinKarpMatcher.h"
 #include "kmpMatcher.h"
-#include "BooyerMooreMatcher.h"
+#include "BoyerMooreMatcher.h"
 using namespace std;
 
 int main () {
@@ -37,12 +37,12 @@ int main () {
     BruteForceMatcher bruteForceMatcher;
     RabinKarpMatcher rabinKarpMatcher;
     kmpMatcher kmpMatcher;
-    BooyerMooreMatcher booyerMooreMatcher;
+    BoyerMooreMatcher boyerMooreMatcher;
 
     map<string , double> rkMatches = rabinKarpMatcher.match (testdoc , corpus);
     map<string , double> bfMatches = bruteForceMatcher.match (testdoc , corpus);
     map<string , double> kmpMatches = kmpMatcher.match (testdoc , corpus);
-    map<string , double> bmMatches = booyerMooreMatcher.match (testdoc , corpus);
+    map<string , double> bmMatches = boyerMooreMatcher.match (testdoc , corpus);
 
     // Compare the results of the two algorithms
     std::cout << "The titles of the documents that were plagarized (As detected by brute force):" << std::endl;
@@ -60,7 +60,7 @@ int main () {
     std::cout << "The titles of the documents that were plagarized (As detected by KMP):" << std::endl;
     for (map<string , double>::iterator itr = kmpMatches.begin ();itr != kmpMatches.end ();itr++)
     {
-        std::cout << itr->first << "was plagarised by" << itr->second << "%" << std::endl;
+        std::cout << itr->first << "was plagarised by " << itr->second << "%" << std::endl;
     }cout<<endl<<endl;
     std::cout << "The titles of the documents that were plagarized (As detected by Booyer Moore):" << std::endl;
     for (map<string , double>::iterator itr = bmMatches.begin ();itr != bmMatches.end ();itr++)
@@ -85,7 +85,7 @@ int main () {
     auto kmpDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
     cout << "The KMP took :" << kmpDuration << " microseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
-    booyerMooreMatcher.match (testdoc , corpus);
+    boyerMooreMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
     auto bmDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
     cout << "The Booyer Moore took :" << bmDuration << " microseconds" << " to excute" << endl;
