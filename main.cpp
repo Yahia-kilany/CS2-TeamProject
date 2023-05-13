@@ -16,21 +16,21 @@ int main () {
 
     Corpus corpus;
     Document doc;
-    doc.createFromFile ("Corpus.txt");
+    doc.createFromFile ("First essay.txt");
     corpus.addDocument (doc);
 
-    // doc.createFromFile ("Second essay.txt");
-    // corpus.addDocument (doc);
+    doc.createFromFile ("Second essay.txt");
+    corpus.addDocument (doc);
 
-    // doc.createFromFile ("Third essay.txt");
-    // corpus.addDocument (doc);
+    doc.createFromFile ("Third essay.txt");
+    corpus.addDocument (doc);
 
-    // doc.createFromFile("Fourth essay");
-    // corpus.addDocument(doc);
+    doc.createFromFile("Fourth essay.txt");
+    corpus.addDocument(doc);
 
     Document testdoc;
 
-    testdoc.createFromFile ("Testdoc.txt");
+    testdoc.createFromFile ("testdocpl.txt");
 
 
 
