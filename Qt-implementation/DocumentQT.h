@@ -13,8 +13,6 @@ public:
 
     void setContent (QString str);
 
-    //    void createFromFile (QString filename);
-
     QString  getTitle () const;
 
     QString  getContent () const;

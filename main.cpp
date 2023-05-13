@@ -16,21 +16,21 @@ int main () {
 
     Corpus corpus;
     Document doc;
-    doc.createFromFile ("First essay.txt");
+    doc.createFromFile ("Corpus.txt");
     corpus.addDocument (doc);
 
-    doc.createFromFile ("Second essay.txt");
-    corpus.addDocument (doc);
+    // doc.createFromFile ("Second essay.txt");
+    // corpus.addDocument (doc);
 
-    doc.createFromFile ("Third essay.txt");
-    corpus.addDocument (doc);
+    // doc.createFromFile ("Third essay.txt");
+    // corpus.addDocument (doc);
 
     // doc.createFromFile("Fourth essay");
     // corpus.addDocument(doc);
 
     Document testdoc;
 
-    testdoc.createFromFile ("Testdocpl.txt");
+    testdoc.createFromFile ("Testdoc.txt");
 
 
 
@@ -68,26 +68,30 @@ int main () {
         std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
     }
     cout<<endl<<endl;
-    // cout << "The Booyer Moore object is taking " << booyerMooreMatcher.getMemoryUsage () << " bytes from memory" << endl;
     auto start = chrono::high_resolution_clock::now ();
     bruteForceMatcher.match (testdoc , corpus);
     auto end = chrono::high_resolution_clock::now ();
-    auto bfDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The brute Force took :" << bfDuration << " microseconds" << " to excute" << endl;
+    auto bfDuration = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
+    cout << "The brute Force took :" << bfDuration << " nanoseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
     rabinKarpMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
-    auto rkDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The rabin karp took :" << rkDuration << " microseconds" << " to excute" << endl;
+    auto rkDuration = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
+    cout << "The rabin karp took :" << rkDuration << " nanoseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
     kmpMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
-    auto kmpDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The KMP took :" << kmpDuration << " microseconds" << " to excute" << endl;
+    auto kmpDuration = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
+    cout << "The KMP took :" << kmpDuration << " nanoseconds" << " to excute" << endl;
     start = chrono::high_resolution_clock::now ();
     boyerMooreMatcher.match (testdoc , corpus);
     end = chrono::high_resolution_clock::now ();
-    auto bmDuration = chrono::duration_cast<chrono::microseconds>(end - start).count ();
-    cout << "The Booyer Moore took :" << bmDuration << " microseconds" << " to excute" << endl;
+    auto bmDuration = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
+    cout << "The Booyer Moore took :" << bmDuration << " nanoseconds" << " to excute" << endl;
+    cout<<endl;
+    cout<<"The brute force object ocuppies " <<bruteForceMatcher.getMemoryUsage()<<" bytes from memory"<<endl;
+    cout<<"The rabin karp object ocuppies " <<rabinKarpMatcher.getMemoryUsage()<<" bytes from memory"<<endl;
+    cout<<"The kmp object ocuppies " <<kmpMatcher.getMemoryUsage()<<" bytes from memory"<<endl;
+    cout<<"The boyer moore object ocuppies" <<boyerMooreMatcher.getMemoryUsage()<< " bytes from memory"<<endl;
     return 0;
 }
