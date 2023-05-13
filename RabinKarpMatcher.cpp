@@ -6,7 +6,7 @@ CS2 project: 2- Simple palagarism detection utility using string matching
 #include <iostream>
 
 map<string , double> RabinKarpMatcher::match (const Document& testDoc , const Corpus& corpus) {
-    int prime = 1007;
+    int prime = 107;
     // Define an empty map to store the matches and their similarity scores
     map <string , double> matches;
     // Split the test document into sentences
