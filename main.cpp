@@ -25,8 +25,8 @@ int main () {
     doc.createFromFile ("Third essay.txt");
     corpus.addDocument (doc);
 
-    doc.createFromFile("Fourth essay.txt");
-    corpus.addDocument(doc);
+    doc.createFromFile ("Fourth essay.txt");
+    corpus.addDocument (doc);
 
     Document testdoc;
 
@@ -39,35 +39,62 @@ int main () {
     kmpMatcher kmpMatcher;
     BoyerMooreMatcher boyerMooreMatcher;
 
-    map<string , double> rkMatches = rabinKarpMatcher.match (testdoc , corpus);
     map<string , double> bfMatches = bruteForceMatcher.match (testdoc , corpus);
+    map<string , double> rkMatches = rabinKarpMatcher.match (testdoc , corpus);
     map<string , double> kmpMatches = kmpMatcher.match (testdoc , corpus);
     map<string , double> bmMatches = boyerMooreMatcher.match (testdoc , corpus);
 
-    // Compare the results of the two algorithms
-    std::cout << "The titles of the documents that were plagarized (As detected by brute force):" << std::endl;
-    for (map<string , double>::iterator itr = bfMatches.begin ();itr != bfMatches.end ();itr++)
-    {
-        std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
+    if (bfMatches.empty ()) {
+        cout << "The brute force algorithm did not detect plagarism" << endl << endl;
     }
-    cout<<endl<<endl;
-    std::cout << "The titles of the documents that were plagarized (As detected by Rabin Karp):" << std::endl;
-    for (map<string , double>::iterator itr = rkMatches.begin ();itr != rkMatches.end ();itr++)
+    else
     {
-        std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
+        std::cout << "The titles of the documents that were plagarized (As detected by brute force):" << std::endl;
+        for (map<string , double>::iterator itr = bfMatches.begin ();itr != bfMatches.end ();itr++)
+        {
+            std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
+        }
+        cout << endl << endl;
     }
-    cout<<endl<<endl;
-    std::cout << "The titles of the documents that were plagarized (As detected by KMP):" << std::endl;
-    for (map<string , double>::iterator itr = kmpMatches.begin ();itr != kmpMatches.end ();itr++)
-    {
-        std::cout << itr->first << "was plagarised by " << itr->second << "%" << std::endl;
-    }cout<<endl<<endl;
-    std::cout << "The titles of the documents that were plagarized (As detected by Booyer Moore):" << std::endl;
-    for (map<string , double>::iterator itr = bmMatches.begin ();itr != bmMatches.end ();itr++)
-    {
-        std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
+
+    if (rkMatches.empty ()) {
+        cout << "The rabin Karp algorithm did not detect plagarism" << endl << endl;
     }
-    cout<<endl<<endl;
+    else
+    {
+        std::cout << "The titles of the documents that were plagarized (As detected by Rabin Karp):" << std::endl;
+        for (map<string , double>::iterator itr = rkMatches.begin ();itr != rkMatches.end ();itr++)
+        {
+            std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
+        }
+        cout << endl << endl;
+    }
+
+    if (kmpMatches.empty ()) {
+        cout << "The KMP algorithm did not detect plagarism" << endl << endl;
+    }
+
+    else
+    {
+        std::cout << "The titles of the documents that were plagarized (As detected by KMP):" << std::endl;
+        for (map<string , double>::iterator itr = kmpMatches.begin ();itr != kmpMatches.end ();itr++)
+        {
+            std::cout << itr->first << "was plagarised by " << itr->second << "%" << std::endl;
+        }cout << endl << endl;
+    }
+
+    if (bmMatches.empty ()) {
+        cout << "The Boyer Moore algorithm did not detect plagarism" << endl << endl;
+    }
+    else
+    {
+        std::cout << "The titles of the documents that were plagarized (As detected by Booyer Moore):" << std::endl;
+        for (map<string , double>::iterator itr = bmMatches.begin ();itr != bmMatches.end ();itr++)
+        {
+            std::cout << itr->first << " was plagarised by " << itr->second << "%" << std::endl;
+        }
+        cout << endl << endl;
+    }
     auto start = chrono::high_resolution_clock::now ();
     bruteForceMatcher.match (testdoc , corpus);
     auto end = chrono::high_resolution_clock::now ();
@@ -88,10 +115,10 @@ int main () {
     end = chrono::high_resolution_clock::now ();
     auto bmDuration = chrono::duration_cast<chrono::nanoseconds>(end - start).count ();
     cout << "The Booyer Moore took :" << bmDuration << " nanoseconds" << " to excute" << endl;
-    cout<<endl;
-    cout<<"The brute force object ocuppies " <<bruteForceMatcher.getMemoryUsage()<<" bytes from memory"<<endl;
-    cout<<"The rabin karp object ocuppies " <<rabinKarpMatcher.getMemoryUsage()<<" bytes from memory"<<endl;
-    cout<<"The kmp object ocuppies " <<kmpMatcher.getMemoryUsage()<<" bytes from memory"<<endl;
-    cout<<"The boyer moore object ocuppies" <<boyerMooreMatcher.getMemoryUsage()<< " bytes from memory"<<endl;
+    cout << endl;
+    cout << "The brute force object ocuppies " << bruteForceMatcher.getMemoryUsage () << " bytes from memory" << endl;
+    cout << "The rabin karp object ocuppies " << rabinKarpMatcher.getMemoryUsage () << " bytes from memory" << endl;
+    cout << "The kmp object ocuppies " << kmpMatcher.getMemoryUsage () << " bytes from memory" << endl;
+    cout << "The boyer moore object ocuppies" << boyerMooreMatcher.getMemoryUsage () << " bytes from memory" << endl;
     return 0;
 }
